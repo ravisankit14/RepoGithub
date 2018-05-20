@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.repogithub.R;
 import com.repogithub.model.GetRepo;
 import com.repogithub.ui.DetailActivity;
-import com.repogithub.ui.ItemFragment;
 import com.repogithub.ui.ItemFragment.OnFragmentItemListener;
 import com.repogithub.utility.ImageCacheManager;
 

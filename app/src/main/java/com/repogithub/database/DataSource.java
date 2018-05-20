@@ -13,7 +13,6 @@ import com.repogithub.model.GetRepo;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.http.GET;
 
 public class DataSource {
 

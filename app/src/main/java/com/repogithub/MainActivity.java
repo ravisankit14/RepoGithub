@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,17 +24,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.repogithub.R;
 import com.repogithub.restapicall.ApiService;
 import com.repogithub.restapicall.RestClientApi;
 import com.repogithub.restapicall.model.ModelUsername;
 import com.repogithub.restapicall.model.Search;
 import com.repogithub.ui.ItemFragment;
-
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashSet;

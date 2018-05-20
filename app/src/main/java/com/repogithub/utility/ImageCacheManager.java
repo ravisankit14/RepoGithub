@@ -34,7 +34,7 @@ public class ImageCacheManager {
         FileOutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
