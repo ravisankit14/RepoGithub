@@ -59,14 +59,14 @@ public class DataSource {
         }
     }
 
-    public List<GetRepo> getAllItems(String category) {
+    public List<GetRepo> getAllItems() {
         List<GetRepo> dataItems = new ArrayList<>();
 
         Cursor cursor = null;
-        if (category == null) {
-            cursor = mDatabase.query(ItemsTable.TABLE_ITEMS, ItemsTable.ALL_COLUMNS,
-                    null, null, null, null, ItemsTable.COLUMN_NAME);
-        }
+
+        cursor = mDatabase.query(ItemsTable.TABLE_ITEMS, ItemsTable.ALL_COLUMNS,
+                null, null, null, null, ItemsTable.COLUMN_NAME);
+
 
         while (cursor.moveToNext()) {
             GetRepo item = new GetRepo();

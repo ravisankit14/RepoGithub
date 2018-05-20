@@ -69,7 +69,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        Log.d("response 2", " " + holder.mItem.getName());
+        //Log.d("image 2", " " + holder.mItem.getName());
         try {
             holder.mProjectName.setText(holder.mItem.getName());
             holder.mHttpLink.setText(holder.mItem.getHtml_url());

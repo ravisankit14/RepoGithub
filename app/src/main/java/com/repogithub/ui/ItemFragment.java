@@ -210,13 +210,16 @@ public class ItemFragment extends Fragment {
         });
     }
 
-
+    //data storage
     private void addToDatabase(final List<GetRepo> dataList){
         final DataSource dataSource = new DataSource(getActivity());
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 dataSource.seedDatabase(dataList);
+
+                for(GetRepo t : dataSource.getAllItems())
+                Log.e("datastorage",t.getName() +" ===="+ t.getOwner().getAvatar_url());
             }
         }); thread.start();
     }

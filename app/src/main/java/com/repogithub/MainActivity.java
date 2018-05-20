@@ -1,5 +1,6 @@
 package com.repogithub;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -15,6 +16,7 @@ import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(s.length() > 2){
 
                 mCardView.setVisibility(View.VISIBLE);
+                frameLayout.setVisibility(View.GONE);
                 getUsername(s.toString());
 
             }else{
@@ -111,13 +114,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void getUsername(String search){
 
         mList.clear();
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+       /* HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
-                .build();
+                .build();*/
 
-        ApiService restClientApi = RestClientApi.getClient(client).create(ApiService.class);
+        ApiService restClientApi = RestClientApi.getClient().create(ApiService.class);
 
         Call<ModelUsername> call = restClientApi.getUsername(search);
 
@@ -175,18 +178,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //intent.putExtra("username",mList.get(i));
             //startActivity(intent);
 
+            closeKeyboard();
             mCardView.setVisibility(View.GONE);
             frameLayout.setVisibility(View.VISIBLE);
 
             Bundle bundle = new Bundle();
             bundle.putString("username", mList.get(i));
-
+            fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ItemFragment itemFragment = new ItemFragment();
             itemFragment.setArguments(bundle);
-            ft.add(R.id.fragment,itemFragment);
+            ft.replace(R.id.fragment,itemFragment);
             ft.commit();
         }
+    }
 
+    public void closeKeyboard(){
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 }

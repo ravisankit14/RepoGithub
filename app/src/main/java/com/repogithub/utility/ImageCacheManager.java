@@ -29,7 +29,7 @@ public class ImageCacheManager {
     }
 
     public static void putBitmap(Context context, GetRepo getRepo, Bitmap bitmap) {
-        String fileName = context.getCacheDir() + "/" + getRepo.getOwner().getAvatar_url();
+        String fileName = context.getCacheDir() + "/" + getRepo.getName();
         File file = new File(fileName);
         FileOutputStream outputStream = null;
         try {
@@ -46,6 +46,5 @@ public class ImageCacheManager {
                 }
             }
         }
-
     }
 }

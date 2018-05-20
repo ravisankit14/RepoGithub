@@ -11,12 +11,12 @@ public class RestClientApi {
 
     private final static String BASE_URL = "https://api.github.com/";
 
-    public static Retrofit getClient(OkHttpClient client){
+    public static Retrofit getClient(){
         if(mRetrofit == null){
             mRetrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(client)
+                    //.client(client)
                     .build();
         }
         return mRetrofit;
