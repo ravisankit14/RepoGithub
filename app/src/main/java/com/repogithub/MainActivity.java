@@ -1,4 +1,4 @@
-package com.repogithub.ui;
+package com.repogithub;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -30,6 +30,7 @@ import com.repogithub.restapicall.ApiService;
 import com.repogithub.restapicall.RestClientApi;
 import com.repogithub.restapicall.model.ModelUsername;
 import com.repogithub.restapicall.model.Search;
+import com.repogithub.ui.ItemFragment;
 
 import org.json.JSONObject;
 import org.w3c.dom.Text;
