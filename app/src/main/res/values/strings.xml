@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RepoGithub</string>
+    <string name="username">User Name</string>
+    <string name="error">No Result Found</string>
+</resources>

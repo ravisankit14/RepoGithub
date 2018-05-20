@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.repogithub.ui.MainActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginEnd="@dimen/margindp"
+        android:layout_marginStart="@dimen/margindp"
+        android:layout_marginTop="@dimen/margindp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="20dp"
+            android:hint="@string/username" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margindp"
+        android:layout_marginEnd="@dimen/margindp"
+        android:layout_marginStart="@dimen/margindp"
+        android:layout_marginTop="@dimen/margindp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ListView
+            android:id="@+id/usernameList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"></ListView>
+
+
+        <TextView
+            android:id="@+id/errorMsg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
