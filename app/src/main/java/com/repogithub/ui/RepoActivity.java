@@ -141,6 +141,8 @@ public class RepoActivity extends AppCompatActivity {
 
                 if(response.isSuccessful()){
 
+                    progressBar.setVisibility(View.GONE);
+                    isLoading = false;
                     List<GetRepo> model =  response.body();
 
                     if(model != null){
@@ -153,7 +155,7 @@ public class RepoActivity extends AppCompatActivity {
                         }else{
                             isLastPage = true;
                         }
-                        progressBar.setVisibility(View.GONE);
+
                         addToDatabase(model);
                     }
 

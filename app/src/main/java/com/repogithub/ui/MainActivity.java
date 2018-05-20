@@ -129,10 +129,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         mList.clear();
                         mList.add("no result found");
                     }
-                    adapter.notifyDataSetChanged();
+
                 }else{
                     Toast.makeText(getBaseContext(),"Query limit reached",Toast.LENGTH_SHORT).show();
                 }
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
