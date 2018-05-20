@@ -3,7 +3,13 @@ package com.repogithub.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +22,14 @@ import com.bumptech.glide.Glide;
 import com.repogithub.R;
 import com.repogithub.model.GetRepo;
 import com.repogithub.ui.DetailActivity;
+import com.repogithub.ui.ItemFragment;
 import com.repogithub.ui.ItemFragment.OnFragmentItemListener;
+import com.repogithub.utility.ImageCacheManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -65,11 +77,17 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             holder.mWatcher.setText(holder.mItem.getWatchers_count());
             holder.mIssues.setText(holder.mItem.getOpen_issues_count());
 
-            Glide.with(holder.mAvatarIcon.getContext()).load(holder.mItem.getOwner().getAvatar_url())
-                    .into(holder.mAvatarIcon);
+            //Glide.with(holder.mAvatarIcon.getContext()).load(holder.mItem.getOwner().getAvatar_url())
+            //        .into(holder.mAvatarIcon);
 
-            //Bitmap bitmap = mBitmap.get("avatar");
-            //holder.mAvatarIcon.setImageBitmap(bitmap);
+            Bitmap bitmap = ImageCacheManager.getBitmap(mContext, holder.mItem);
+            if (bitmap == null) {
+                ImageDownloadTask task = new ImageDownloadTask();
+                task.setViewHolder(holder);
+                task.execute(holder.mItem);
+            } else {
+                holder.mAvatarIcon.setImageBitmap(bitmap);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -132,6 +150,47 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         @Override
         public String toString() {
             return super.toString() + " '" + mProjectName.getText() + "'";
+        }
+    }
+
+    private class ImageDownloadTask extends AsyncTask<GetRepo, Void, Bitmap> {
+
+        private GetRepo mGetRepo;
+        private ViewHolder mHolder;
+
+        public void setViewHolder(ViewHolder holder) {
+            mHolder = holder;
+        }
+
+        @Override
+        protected Bitmap doInBackground(GetRepo... dataItems) {
+
+            mGetRepo = dataItems[0];
+            String imageUrl = mGetRepo.getOwner().getAvatar_url() +".png";
+            InputStream in = null;
+
+            try {
+                in = (InputStream) new URL(imageUrl).getContent();
+                return BitmapFactory.decodeStream(in);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            mHolder.mAvatarIcon.setImageBitmap(bitmap);
+            ImageCacheManager.putBitmap(mContext, mGetRepo, bitmap);
         }
     }
 }

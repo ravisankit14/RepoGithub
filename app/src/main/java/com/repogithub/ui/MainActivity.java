@@ -2,8 +2,11 @@ package com.repogithub.ui;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayAdapter<String> adapter;
 
     private Handler handler;
+    private FragmentManager fm;
+
+    private FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 getUsername(s.toString());
 
             }else{
-                //mEditText.setText(null);
+                mCardView.setVisibility(View.GONE);
                 //TextKeyListener.clear(mEditText.getText());
             }
 
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mListView = (ListView) findViewById(R.id.usernameList);
         mCardView = (CardView) findViewById(R.id.cardList);
         mErrorMsg = (TextView) findViewById(R.id.errorMsg);
+        frameLayout = (FrameLayout) findViewById(R.id.fragment);
 
         mEditText.addTextChangedListener(myTextWatcher);
     }
@@ -161,9 +170,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Log.d("position", " " + i);
 
         if(!mList.get(i).equalsIgnoreCase("no result found")){
-            Intent intent  = new Intent(getBaseContext(),RepoActivity.class);
-            intent.putExtra("username",mList.get(i));
-            startActivity(intent);
+            //Intent intent  = new Intent(getBaseContext(),RepoActivity.class);
+            //intent.putExtra("username",mList.get(i));
+            //startActivity(intent);
+
+            mCardView.setVisibility(View.GONE);
+            frameLayout.setVisibility(View.VISIBLE);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("username", mList.get(i));
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ItemFragment itemFragment = new ItemFragment();
+            itemFragment.setArguments(bundle);
+            ft.add(R.id.fragment,itemFragment);
+            ft.commit();
         }
 
     }
