@@ -1,7 +1,10 @@
 package com.repogithub.model;
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.repogithub.database.ItemsTable;
 
 public class GetRepo implements Parcelable {
 
@@ -9,6 +12,9 @@ public class GetRepo implements Parcelable {
     private String html_url;
     private String description;
     private String size;
+    private String watchers_count;
+    private String open_issues_count;
+    public Owner owner;
 
     protected GetRepo(Parcel in) {
         name = in.readString();
@@ -17,6 +23,10 @@ public class GetRepo implements Parcelable {
         size = in.readString();
         watchers_count = in.readString();
         open_issues_count = in.readString();
+    }
+
+    public GetRepo (){
+
     }
 
     public static final Creator<GetRepo> CREATOR = new Creator<GetRepo>() {
@@ -87,9 +97,7 @@ public class GetRepo implements Parcelable {
         this.owner = owner;
     }
 
-    private String watchers_count;
-    private String open_issues_count;
-    private Owner owner;
+
 
     @Override
     public int describeContents() {
@@ -106,8 +114,37 @@ public class GetRepo implements Parcelable {
         parcel.writeString(open_issues_count);
     }
 
+    public ContentValues toValues() {
+        ContentValues values = new ContentValues(7);
 
-    public class Owner{
+        values.put(ItemsTable.COLUMN_ID, name);
+        values.put(ItemsTable.COLUMN_NAME, html_url);
+        values.put(ItemsTable.COLUMN_DESCRIPTION, description);
+        values.put(ItemsTable.COLUMN_SIZE, size);
+        values.put(ItemsTable.COLUMN_WATCHER, watchers_count);
+        values.put(ItemsTable.COLUMN_ISSUES, open_issues_count);
+        values.put(ItemsTable.COLUMN_IMAGE, getOwner().getAvatar_url());
+        return values;
+    }
+
+
+    public class Owner implements Parcelable{
+        protected Owner(Parcel in) {
+            avatar_url = in.readString();
+        }
+
+        public  final Creator<Owner> CREATOR = new Creator<Owner>() {
+            @Override
+            public Owner createFromParcel(Parcel in) {
+                return new Owner(in);
+            }
+
+            @Override
+            public Owner[] newArray(int size) {
+                return new Owner[size];
+            }
+        };
+
         public String getAvatar_url() {
             return avatar_url;
         }
@@ -117,5 +154,15 @@ public class GetRepo implements Parcelable {
         }
 
         private String avatar_url;
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(avatar_url);
+        }
     }
 }

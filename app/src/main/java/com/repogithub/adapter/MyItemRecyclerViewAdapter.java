@@ -1,33 +1,50 @@
 package com.repogithub.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.repogithub.R;
 import com.repogithub.model.GetRepo;
+import com.repogithub.ui.DetailActivity;
 import com.repogithub.ui.ItemFragment.OnFragmentItemListener;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+
+    public static final String ITEM_KEY = "item_key";
+    public static final String ITEM_KEY_2 = "item_key2";
 
     private final List<GetRepo> mValues;
     private Context mContext;
     private OnFragmentItemListener mItemListListner;
     private String mFlag;
+    private Map<String, Bitmap> mBitmap;
 
-    public MyItemRecyclerViewAdapter(Context context, @NonNull List<GetRepo> items, OnFragmentItemListener listener) {
+    public MyItemRecyclerViewAdapter(Context context, @NonNull List<GetRepo> items,Map<String, Bitmap> mBitmap) {
         mContext = context;
         mValues = items;
-        mItemListListner = listener;
+        this.mBitmap = mBitmap;
+        //mItemListListner = listener;
         //mFlag = flag;
+    }
+
+    public MyItemRecyclerViewAdapter(Context context, @NonNull List<GetRepo> items) {
+        mContext = context;
+        mValues = items;
+
     }
 
     @Override
@@ -40,13 +57,33 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
+        Log.d("response 2", " " + holder.mItem.getName());
+        try {
+            holder.mProjectName.setText(holder.mItem.getName());
+            holder.mHttpLink.setText(holder.mItem.getHtml_url());
+            holder.mSize.setText(holder.mItem.getSize());
+            holder.mWatcher.setText(holder.mItem.getWatchers_count());
+            holder.mIssues.setText(holder.mItem.getOpen_issues_count());
 
-        holder.mProjectName.setText(mValues.get(position).getName());
-        holder.mHttpLink.setText(mValues.get(position).getHtml_url());
-        holder.mSize.setText(mValues.get(position).getSize());
-        holder.mWatcher.setText(mValues.get(position).getWatchers_count());
-        holder.mIssues.setText(mValues.get(position).getOpen_issues_count());
-        //holder.mProjectName.setText(mValues.get(position).getmProjectName());
+            Glide.with(holder.mAvatarIcon.getContext()).load(holder.mItem.getOwner().getAvatar_url())
+                    .into(holder.mAvatarIcon);
+
+            //Bitmap bitmap = mBitmap.get("avatar");
+            //holder.mAvatarIcon.setImageBitmap(bitmap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(ITEM_KEY, holder.mItem);
+                intent.putExtra(ITEM_KEY_2, holder.mItem.getOwner().getAvatar_url());
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 
@@ -57,6 +94,17 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             return mValues.size();
         }
         return 0;
+    }
+
+    public void add(GetRepo r) {
+        mValues.add(r);
+        notifyItemInserted(mValues.size() - 1);
+    }
+
+    public void addAll(List<GetRepo> mValues){
+        for (GetRepo result : mValues) {
+            add(result);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -22,6 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:padding="4dp"
+            android:textSize="18sp"
             tools:text="Public Project Name" />
 
         <TextView
@@ -53,7 +54,8 @@
             android:layout_alignStart="@+id/imageView"
             android:layout_marginBottom="5dp"
             android:padding="4dp"
-            tools:text="2 mb" />
+            android:textSize="16sp"
+            tools:text="2" />
 
         <TextView
             android:id="@+id/text_watcher"
@@ -63,6 +65,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="13dp"
             android:padding="4dp"
+            android:textSize="16sp"
             tools:text="01" />
 
         <TextView
@@ -73,6 +76,7 @@
             android:layout_alignBottom="@+id/text_size"
             android:layout_alignEnd="@+id/text_watcher"
             android:padding="4dp"
+            android:textSize="16sp"
             tools:text="issues:10" />
     </RelativeLayout>
 

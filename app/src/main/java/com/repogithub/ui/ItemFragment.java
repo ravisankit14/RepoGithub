@@ -64,7 +64,7 @@ public class ItemFragment extends Fragment {
         if(bundle != null){
             repoList = bundle.getParcelableArrayList("repo_list");
         }
-        adapter = new MyItemRecyclerViewAdapter(getActivity(), repoList,mItemListener);
+        //adapter = new MyItemRecyclerViewAdapter(getActivity(), repoList,mItemListener);
         mItemList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

@@ -1,22 +1,34 @@
 package com.repogithub.ui;
 
-import android.os.Parcelable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.repogithub.R;
+import com.repogithub.adapter.MyItemRecyclerViewAdapter;
+import com.repogithub.database.DataSource;
 import com.repogithub.model.GetRepo;
 import com.repogithub.restapicall.RepoService;
 import com.repogithub.restapicall.RestClientApi;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,41 +37,103 @@ import retrofit2.Response;
 public class RepoActivity extends AppCompatActivity {
 
     private FragmentManager fm;
+    private static int PAGE_SIZE = 20;
 
     private ItemFragment itemFragment;
     private List<GetRepo> mList;
+
+    private RecyclerView mItemList;
+    private MyItemRecyclerViewAdapter adapter;
+    private LinearLayoutManager mLayoutManager;
+
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    private static String size = "1";
+    private static String username;
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repo);
 
+        mList = new ArrayList<>();
+
         fm = getSupportFragmentManager();
         Bundle bundle = new Bundle();
 
         if(getIntent().hasExtra("username")){
 
-            String username = getIntent().getStringExtra("username");
+            username = getIntent().getStringExtra("username");
             if(username != null ){
-                getUsername(username);
+                getUsername(username, size, String.valueOf(PAGE_SIZE));
             }
+        }
 
+        mItemList = (RecyclerView) findViewById(R.id.searchRecycleList);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mItemList.setLayoutManager(mLayoutManager);
+
+        mItemList.addOnScrollListener(recyclerViewOnScrollListener);
+        displayDataItems();
+    }
+
+    private void displayDataItems(Map<String,Bitmap> mBitmap) {
+        if (mItemList != null) {
+            adapter = new MyItemRecyclerViewAdapter(this, mList,mBitmap);
+            mItemList.setAdapter(adapter);
 
         }
     }
 
-    private void getUsername(String search){
+    private void displayDataItems() {
+        adapter = new MyItemRecyclerViewAdapter(this, mList);
+        mItemList.setAdapter(adapter);
+    }
 
-        //mList.clear();
-        //HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        //logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        //OkHttpClient client = new OkHttpClient.Builder()
-        //        .addInterceptor(logging)
-        //        .build();
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = mLayoutManager.getChildCount();
+            int totalItemCount = mLayoutManager.getItemCount();
+            int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+            if (!isLoading && !isLastPage) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0) {
+                    loadMoreItems();
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    };
+
+    private void loadMoreItems() {
+        isLoading = true;
+
+        PAGE_SIZE += 20;
+
+        getUsername(username, size, String.valueOf(PAGE_SIZE));
+    }
+
+    private void getUsername(String search, final String size, String length){
 
         RepoService restClientApi = RestClientApi.getClientRepo().create(RepoService.class);
 
-        Call<List<GetRepo>> call = restClientApi.getUsername(search);
+        LinkedHashMap map = new LinkedHashMap();
+        map.put("page",size);
+        map.put("per_page",length);
+
+        Call call = restClientApi.getUsername(search, map);
 
         call.enqueue(new Callback<List<GetRepo>>() {
             @Override
@@ -68,16 +142,20 @@ public class RepoActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
 
                     List<GetRepo> model =  response.body();
-                    assert model != null;
-                    Log.d("response ", " " + model.get(0));
 
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("repo_list", (ArrayList<? extends Parcelable>) model);
-                    FragmentTransaction ft2 = fm.beginTransaction();
-                    itemFragment = new ItemFragment();
-                    itemFragment.setArguments(bundle);
-                    ft2.add(R.id.listFragment,itemFragment);
-                    ft2.commit();
+                    if(model != null){
+                        Log.d("response ", " " + model.size());
+
+                        adapter.addAll(model);
+
+                        if(mList.size() >= PAGE_SIZE){
+                            //loadMoreItems();
+                        }else{
+                            isLastPage = true;
+                        }
+                        progressBar.setVisibility(View.GONE);
+                        addToDatabase(model);
+                    }
 
                 }else{
                     Toast.makeText(getBaseContext(),"Query limit reached",Toast.LENGTH_SHORT).show();
@@ -90,9 +168,51 @@ public class RepoActivity extends AppCompatActivity {
                     Log.e("response",t.toString());
             }
         });
-
     }
 
+
+    private void addToDatabase(final List<GetRepo> dataList){
+        final DataSource dataSource = new DataSource(getBaseContext());
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dataSource.seedDatabase(dataList);
+            }
+        }); thread.start();
+    }
+
+    //not in use
+    private Map<String, Bitmap> imageLoader (final List<GetRepo> model ){
+        final Map<String, Bitmap> map = new HashMap<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (GetRepo item : model) {
+                    String imageUrl = item.getOwner().getAvatar_url() + ".png";
+                    Log.e("response",imageUrl);
+                    InputStream in = null;
+
+                    try {
+                        in = (InputStream) new URL(imageUrl).getContent();
+                        Bitmap bitmap = BitmapFactory.decodeStream(in);
+                        map.put("avatar", bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            in.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }); thread.start();
+
+        //displayDataItems(map);
+        return map;
+    }
 
 
 }

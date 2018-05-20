@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.repogithub">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -19,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.RepoActivity"></activity>
+
+        <activity android:name=".ui.DetailActivity"></activity>
     </application>
 
 </manifest>
