@@ -14,7 +14,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba06901d-e070-4d8d-885d-0573c2938d21" name="Default" comment="">
+    <list default="true" id="ba06901d-e070-4d8d-885d-0573c2938d21" name="Default" comment="commit repogithub">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/javaCompile/classAnalysis.bin" />
@@ -22,9 +22,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,24 +50,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="136" column="47" lean-forward="false" selection-start-line="136" selection-start-column="47" selection-end-line="136" selection-end-column="47" />
+            <state relative-caret-position="305">
+              <caret line="114" column="25" lean-forward="false" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RepoActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="activity_repo.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="36" lean-forward="false" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RepoActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="155" column="38" lean-forward="false" selection-start-line="155" selection-start-column="28" selection-end-line="155" selection-end-column="38" />
+            <state relative-caret-position="1980">
+              <caret line="164" column="53" lean-forward="false" selection-start-line="164" selection-start-column="53" selection-end-line="164" selection-end-column="53" />
               <folding>
-                <element signature="e#5737#5882#0" expanded="true" />
-                <element signature="e#5881#5882#0" expanded="true" />
+                <element signature="e#5734#5879#0" expanded="true" />
+                <element signature="e#5878#5879#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1864,10 +1876,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/model/GetRepo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/database/DataSource.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/utility/NetworkHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/adapter/MyItemRecyclerViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java" />
       </list>
     </option>
   </component>
@@ -2124,7 +2136,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526839149951" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526839588648" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2172,7 +2184,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526839149951" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526839588648" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2379,7 +2391,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526839149953" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526839588649" />
       </method>
     </configuration>
     <list size="1">
@@ -2484,8 +2496,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5737#5882#0" expanded="true" />
-            <element signature="e#5881#5882#0" expanded="true" />
+            <element signature="e#5734#5879#0" expanded="true" />
+            <element signature="e#5878#5879#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2549,8 +2561,8 @@
         <state relative-caret-position="510">
           <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <element signature="e#5737#5882#0" expanded="true" />
-            <element signature="e#5881#5882#0" expanded="true" />
+            <element signature="e#5734#5879#0" expanded="true" />
+            <element signature="e#5878#5879#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2772,17 +2784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="40" lean-forward="true" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_item.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7">
@@ -2821,22 +2822,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_repo.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="155" column="38" lean-forward="false" selection-start-line="155" selection-start-column="28" selection-end-line="155" selection-end-column="38" />
-          <folding>
-            <element signature="e#5737#5882#0" expanded="true" />
-            <element signature="e#5881#5882#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="270">
+          <caret line="18" column="36" lean-forward="false" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="136" column="47" lean-forward="false" selection-start-line="136" selection-start-column="47" selection-end-line="136" selection-end-column="47" />
+        <state relative-caret-position="305">
+          <caret line="114" column="25" lean-forward="false" selection-start-line="114" selection-start-column="25" selection-end-line="114" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/repogithub/ui/RepoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1980">
+          <caret line="164" column="53" lean-forward="false" selection-start-line="164" selection-start-column="53" selection-end-line="164" selection-end-column="53" />
+          <folding>
+            <element signature="e#5734#5879#0" expanded="true" />
+            <element signature="e#5878#5879#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

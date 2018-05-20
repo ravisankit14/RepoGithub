@@ -21,7 +21,8 @@
         android:layout_height="30dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
         android:background="@android:color/transparent"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </RelativeLayout>
