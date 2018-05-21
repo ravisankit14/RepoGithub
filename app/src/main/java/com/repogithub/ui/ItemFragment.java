@@ -167,7 +167,7 @@ public class ItemFragment extends Fragment {
 
         PAGE_SIZE += 20;
 
-        getUsername(username, size, String.valueOf(PAGE_SIZE));
+        getUsername2(username, size, String.valueOf(PAGE_SIZE));
     }
 
 
@@ -175,7 +175,54 @@ public class ItemFragment extends Fragment {
 
         RepoService restClientApi = RestClientApi.getClientRepo().create(RepoService.class);
 
-        LinkedHashMap map = new LinkedHashMap();
+        LinkedHashMap<String,String> map = new LinkedHashMap();
+        map.put("page",size);
+        map.put("per_page",length);
+
+        Call call = restClientApi.getUsername(search, map);
+
+        call.enqueue(new Callback<List<GetRepo>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<GetRepo>> call, @NonNull Response<List<GetRepo>> response) {
+                isLoading = false;
+                if(response.isSuccessful()){
+
+                    List<GetRepo> model =  response.body();
+
+                    if(model != null){
+                        Log.d("response ", " " + model.size());
+
+                        adapter.addAll(model);
+
+                        if(mList.size() >= PAGE_SIZE){
+                            adapter.addFooter();
+                        }else{
+                            isLastPage = true;
+                        }
+
+                        //addToDatabase(model);
+                    }
+
+                }else{
+                    Toast.makeText(getActivity(),"Query limit reached",Toast.LENGTH_SHORT).show();
+                }
+
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(@Nullable Call<List<GetRepo>> call, @Nullable Throwable t) {
+                if(t != null)
+                    Log.e("response",t.toString());
+            }
+        });
+    }
+
+    private void getUsername2(String search, final String size, String length){
+
+        RepoService restClientApi = RestClientApi.getClientRepo().create(RepoService.class);
+
+        LinkedHashMap<String,String> map = new LinkedHashMap();
         map.put("page",size);
         map.put("per_page",length);
 
@@ -185,9 +232,10 @@ public class ItemFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<GetRepo>> call, @NonNull Response<List<GetRepo>> response) {
 
+                adapter.removeLoadingFooter();
+                isLoading = false;
                 if(response.isSuccessful()){
 
-                    isLoading = false;
                     List<GetRepo> model =  response.body();
 
                     if(model != null){
@@ -196,12 +244,12 @@ public class ItemFragment extends Fragment {
                         adapter.addAll(model);
 
                         if(mList.size() >= PAGE_SIZE){
-                            //loadMoreItems();
+                            adapter.addFooter();
                         }else{
                             isLastPage = true;
                         }
 
-                        addToDatabase(model);
+                        //addToDatabase(model);
                     }
 
                 }else{

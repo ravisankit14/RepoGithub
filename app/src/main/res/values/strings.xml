@@ -2,4 +2,7 @@
     <string name="app_name">RepoGithub</string>
     <string name="username">User Name</string>
     <string name="error">No Result Found</string>
+    <string name="size">size:</string>
+    <string name="watcher">watcher:</string>
+    <string name="issue">issues:</string>
 </resources>

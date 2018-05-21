@@ -10,6 +10,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,9 +73,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         try {
             holder.mProjectName.setText(holder.mItem.getName());
             holder.mHttpLink.setText(holder.mItem.getHtml_url());
-            holder.mSize.setText(holder.mItem.getSize());
-            holder.mWatcher.setText(holder.mItem.getWatchers_count());
-            holder.mIssues.setText(holder.mItem.getOpen_issues_count());
+            holder.mSize.setText(mContext.getString(R.string.size)+holder.mItem.getSize());
+            holder.mWatcher.setText(mContext.getString(R.string.watcher)+holder.mItem.getWatchers_count());
+            holder.mIssues.setText(mContext.getString(R.string.issue)+holder.mItem.getOpen_issues_count());
 
             //Glide.with(holder.mAvatarIcon.getContext()).load(holder.mItem.getOwner().getAvatar_url())
             //        .into(holder.mAvatarIcon);
@@ -122,6 +123,25 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         for (GetRepo result : mValues) {
             add(result);
         }
+    }
+
+    public void addFooter() {
+        add(new GetRepo());
+    }
+
+    public void removeLoadingFooter() {
+
+        int position = mValues.size() - 1;
+        GetRepo item = getItem(position);
+
+        if (item != null) {
+            mValues.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public GetRepo getItem(int position) {
+        return mValues.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
