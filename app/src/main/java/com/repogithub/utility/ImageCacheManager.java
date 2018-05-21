@@ -16,7 +16,7 @@ public class ImageCacheManager {
 
     public static Bitmap getBitmap(Context context, GetRepo getRepo) {
 
-        String fileName = context.getCacheDir() + "/" + getRepo.getOwner().getAvatar_url();
+        String fileName = context.getCacheDir() + "/" + getRepo.getName();
         File file = new File(fileName);
         if (file.exists()) {
             try {

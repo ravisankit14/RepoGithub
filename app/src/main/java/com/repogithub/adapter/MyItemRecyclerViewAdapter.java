@@ -41,16 +41,12 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     private final List<GetRepo> mValues;
     private Context mContext;
-    private OnFragmentItemListener mItemListListner;
-    private String mFlag;
     private Map<String, Bitmap> mBitmap;
 
     public MyItemRecyclerViewAdapter(Context context, @NonNull List<GetRepo> items,Map<String, Bitmap> mBitmap) {
         mContext = context;
         mValues = items;
         this.mBitmap = mBitmap;
-        //mItemListListner = listener;
-        //mFlag = flag;
     }
 
     public MyItemRecyclerViewAdapter(Context context, @NonNull List<GetRepo> items) {
@@ -125,11 +121,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         }
     }
 
-    public void addFooter() {
-        add(new GetRepo());
-    }
-
-    public void removeLoadingFooter() {
+    public void removeFooter() {
 
         int position = mValues.size() - 1;
         GetRepo item = getItem(position);

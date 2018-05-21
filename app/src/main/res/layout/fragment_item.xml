@@ -23,6 +23,7 @@
             android:layout_marginTop="10dp"
             android:padding="4dp"
             android:textSize="18sp"
+            android:maxLength="20"
             tools:text="Public Project Name" />
 
         <TextView

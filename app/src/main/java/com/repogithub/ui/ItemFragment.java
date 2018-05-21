@@ -108,7 +108,7 @@ public class ItemFragment extends Fragment {
             username = bundle.getString("username");
             if(username != null ){
                 if(network){
-                    getUsername(username, size, String.valueOf(PAGE_SIZE));
+                    onFirstLoad(username, size, String.valueOf(PAGE_SIZE));
                 }else{
                     Toast.makeText(getContext(),"No network connectivity",Toast.LENGTH_SHORT).show();
                 }
@@ -141,6 +141,7 @@ public class ItemFragment extends Fragment {
             if (!isLoading && !isLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0) {
+
                     loadMoreItems();
                     progressBar.setVisibility(View.VISIBLE);
                 }
@@ -164,18 +165,17 @@ public class ItemFragment extends Fragment {
 
     private void loadMoreItems() {
         isLoading = true;
-
+        //size += 1;
         PAGE_SIZE += 20;
 
-        getUsername2(username, size, String.valueOf(PAGE_SIZE));
+        onNextLoad(username, size, String.valueOf(PAGE_SIZE));
     }
 
-
-    private void getUsername(String search, final String size, String length){
+    private void onFirstLoad(String search, String size, String length){
 
         RepoService restClientApi = RestClientApi.getClientRepo().create(RepoService.class);
 
-        LinkedHashMap<String,String> map = new LinkedHashMap();
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("page",size);
         map.put("per_page",length);
 
@@ -187,20 +187,20 @@ public class ItemFragment extends Fragment {
                 isLoading = false;
                 if(response.isSuccessful()){
 
-                    List<GetRepo> model =  response.body();
+                    mList =  response.body();
 
-                    if(model != null){
-                        Log.d("response ", " " + model.size());
+                    if(mList != null){
+                        Log.d("response ", " " + mList.size());
 
-                        adapter.addAll(model);
+                        adapter.addAll(mList);
 
                         if(mList.size() >= PAGE_SIZE){
-                            adapter.addFooter();
+
                         }else{
                             isLastPage = true;
                         }
 
-                        //addToDatabase(model);
+                        addToDatabase(mList);
                     }
 
                 }else{
@@ -218,7 +218,7 @@ public class ItemFragment extends Fragment {
         });
     }
 
-    private void getUsername2(String search, final String size, String length){
+    private void onNextLoad(String search, String size, String length){
 
         RepoService restClientApi = RestClientApi.getClientRepo().create(RepoService.class);
 
@@ -232,24 +232,24 @@ public class ItemFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<GetRepo>> call, @NonNull Response<List<GetRepo>> response) {
 
-                adapter.removeLoadingFooter();
-                isLoading = false;
+                adapter.removeFooter();
+
                 if(response.isSuccessful()){
+                    isLoading = false;
+                    mList =  response.body();
 
-                    List<GetRepo> model =  response.body();
+                    if(mList != null){
+                        Log.d("response ", " " + mList.size());
 
-                    if(model != null){
-                        Log.d("response ", " " + model.size());
-
-                        adapter.addAll(model);
+                        adapter.addAll(mList);
 
                         if(mList.size() >= PAGE_SIZE){
-                            adapter.addFooter();
+
                         }else{
                             isLastPage = true;
                         }
 
-                        //addToDatabase(model);
+                        addToDatabase(mList);
                     }
 
                 }else{
