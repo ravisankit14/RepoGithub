@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.repogithub.R;
 import com.repogithub.adapter.MyItemRecyclerViewAdapter;
+import com.repogithub.database.DataSource;
 import com.repogithub.model.GetRepo;
 
 import java.io.IOException;
@@ -41,9 +42,13 @@ public class DetailActivity extends AppCompatActivity {
 
         projName.setText(item.getName());
         desc.setText(item.getDescription());
-        Log.e("bitmap ",imageUrl);
         Glide.with(itemImage.getContext()).load(imageUrl)
                .into(itemImage);
+
+        /*final DataSource dataSource = new DataSource(this);
+        for(GetRepo t : dataSource.getAllItems()){
+            Log.e("datastorage",t.getName() +" ===="+ t.getOwner().getAvatar_url());
+        }*/
 
         //imageLoader(item.getOwner().getAvatar_url() + ".png");
     }

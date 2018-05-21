@@ -218,8 +218,6 @@ public class ItemFragment extends Fragment {
             public void run() {
                 dataSource.seedDatabase(dataList);
 
-                for(GetRepo t : dataSource.getAllItems())
-                Log.e("datastorage",t.getName() +" ===="+ t.getOwner().getAvatar_url());
             }
         }); thread.start();
     }

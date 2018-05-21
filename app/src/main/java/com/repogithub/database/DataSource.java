@@ -7,8 +7,10 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.repogithub.model.GetRepo;
+import com.repogithub.model.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,7 @@ public class DataSource {
 
         while (cursor.moveToNext()) {
             GetRepo item = new GetRepo();
+            Owner owner = new Owner();
 
             item.setName(cursor.getString(
                     cursor.getColumnIndex(ItemsTable.COLUMN_NAME)));
@@ -82,8 +85,10 @@ public class DataSource {
                     cursor.getColumnIndex(ItemsTable.COLUMN_WATCHER)));
             item.setOpen_issues_count(cursor.getString(
                     cursor.getColumnIndex(ItemsTable.COLUMN_ISSUES)));
-            item.owner.setAvatar_url(cursor.getString(
+
+            owner.setAvatar_url(cursor.getString(
                     cursor.getColumnIndex(ItemsTable.COLUMN_IMAGE)));
+            item.setOwner(owner);
         }
         cursor.close();
         return dataItems;

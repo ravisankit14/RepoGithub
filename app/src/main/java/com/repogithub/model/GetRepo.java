@@ -123,46 +123,9 @@ public class GetRepo implements Parcelable {
         values.put(ItemsTable.COLUMN_SIZE, size);
         values.put(ItemsTable.COLUMN_WATCHER, watchers_count);
         values.put(ItemsTable.COLUMN_ISSUES, open_issues_count);
-        values.put(ItemsTable.COLUMN_IMAGE, getOwner().getAvatar_url());
+        values.put(ItemsTable.COLUMN_IMAGE, owner.avatar_url);
         return values;
     }
 
 
-    public class Owner implements Parcelable{
-        protected Owner(Parcel in) {
-            avatar_url = in.readString();
-        }
-
-        public  final Creator<Owner> CREATOR = new Creator<Owner>() {
-            @Override
-            public Owner createFromParcel(Parcel in) {
-                return new Owner(in);
-            }
-
-            @Override
-            public Owner[] newArray(int size) {
-                return new Owner[size];
-            }
-        };
-
-        public String getAvatar_url() {
-            return avatar_url;
-        }
-
-        public void setAvatar_url(String avatar_url) {
-            this.avatar_url = avatar_url;
-        }
-
-        private String avatar_url;
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeString(avatar_url);
-        }
-    }
 }
