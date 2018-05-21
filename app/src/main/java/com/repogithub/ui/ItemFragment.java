@@ -22,6 +22,7 @@ import com.repogithub.database.DataSource;
 import com.repogithub.model.GetRepo;
 import com.repogithub.restapicall.RepoService;
 import com.repogithub.restapicall.RestClientApi;
+import com.repogithub.utility.NetworkHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -50,6 +51,7 @@ public class ItemFragment extends Fragment {
     private static String username;
 
     private ProgressBar progressBar;
+    private boolean network;
 
 
     public ItemFragment() {
@@ -75,6 +77,8 @@ public class ItemFragment extends Fragment {
         if(savedInstanceState != null){
             mList = savedInstanceState.getParcelableArrayList(KEY);
         }
+
+
     }
 
     @Override
@@ -97,13 +101,18 @@ public class ItemFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        network = NetworkHelper.hasNetworkAccess(getContext());
         Bundle bundle = getArguments();
         if(bundle != null){
 
             username = bundle.getString("username");
             if(username != null ){
-                getUsername(username, size, String.valueOf(PAGE_SIZE));
+                if(network){
+                    getUsername(username, size, String.valueOf(PAGE_SIZE));
+                }else{
+                    Toast.makeText(getContext(),"No network connectivity",Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
         displayDataItems();
