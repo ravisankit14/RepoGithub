@@ -37,7 +37,7 @@ public class ItemFragment extends Fragment {
     public OnFragmentItemListener mItemListener;
     private static final String KEY =  "REPO_KEY";
 
-    private static int PAGE_SIZE = 20;
+    private int PAGE_SIZE = 20;
 
     private List<GetRepo> mList;
 
@@ -47,7 +47,7 @@ public class ItemFragment extends Fragment {
 
     private boolean isLoading = false;
     private boolean isLastPage = false;
-    private static String size = "1";
+    private String size = "1";
     private static String username;
 
     private ProgressBar progressBar;
